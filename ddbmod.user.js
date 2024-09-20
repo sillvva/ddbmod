@@ -3,6 +3,8 @@
 // @namespace    http://dndbeyond.com/
 // @version      3.0.0
 // @description  Adds extra moderator options and links
+// @downloadUrl  https://github.com/sillvva/tampermonkey/raw/main/ddbmod.user.js
+// @updateUrl  	 https://github.com/sillvva/tampermonkey/raw/main/ddbmod.user.js
 // @author       Sillvva
 // @match        https://www.dndbeyond.com/*
 // @grant        none
