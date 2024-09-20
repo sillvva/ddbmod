@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         D&D Beyond Moderator
 // @namespace    http://dndbeyond.com/
-// @version      3.0.0
+// @version      3.0.1
 // @description  Adds extra moderator options and links
-// @downloadUrl  https://github.com/sillvva/tampermonkey/raw/main/ddbmod.user.js
-// @updateUrl  	 https://github.com/sillvva/tampermonkey/raw/main/ddbmod.user.js
+// @downloadURL  https://github.com/sillvva/tampermonkey/raw/main/ddbmod.user.js
+// @updateURL  	 https://github.com/sillvva/tampermonkey/raw/main/ddbmod.user.js
 // @author       Sillvva
 // @match        https://www.dndbeyond.com/*
 // @grant        none
@@ -297,7 +297,7 @@ const runScript = function () {
 			}
 		});
 
-		const link = document.querySelector('.report-details header.h2 h2 a[target="_blank"]');
+		const link = document.querySelector('.report-details header.h2 h2 a[target="_blank"]:last-child');
 		const linkContainer = document.querySelector(".report-details header.h2 h2");
 
 		if (link) {
