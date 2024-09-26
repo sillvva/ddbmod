@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         D&D Beyond Moderator
 // @namespace    http://dndbeyond.com/
-// @version      3.0.1
+// @version      3.0.2
 // @description  Adds extra moderator options and links
 // @downloadURL  https://github.com/sillvva/tampermonkey/raw/main/ddbmod.user.js
 // @updateURL  	 https://github.com/sillvva/tampermonkey/raw/main/ddbmod.user.js
@@ -381,21 +381,6 @@ const runScript = function () {
 		}, 500);
 	}
 
-	// Fixed Site Bar
-	if (!inPages("/profile", "/marketplace")) {
-		addStyle(".site-bar {" + "    position: sticky;" + "    z-index: 51000 !important;" + "}");
-		addStyle("#mega-menu-target {" + "    position: sticky !important;" + "    top: 64px;" + "    z-index: 2000;" + "}");
-		addStyle(
-			".sidebar-menu {" +
-				"    position: sticky !important;" +
-				"    top: 120px !important;" +
-				"    max-height: calc(100vh - 122px) !important;" +
-				"    overflow-y: auto !important;" +
-				"    overflow-x: hidden !important;" +
-				"}",
-		);
-	}
-
 	// Name Change Request
 	if (inPages("/forums/d-d-beyond-general/bugs-support/65846-display-name-change-request-thread-v2")) {
 		const posts = Array.from(document.querySelectorAll("li.p-comments"));
@@ -488,15 +473,6 @@ const runScript = function () {
 	document.querySelectorAll(".magic-item-tooltip").forEach((mi) => {
 		mi.after(" (magic item)");
 	});
-
-	document.body.onhashchange = () => {
-		const id = window.location.hash.slice(1);
-		const header = document.getElementById(id);
-		const headerPosition = header.getBoundingClientRect().top;
-		if (headerPosition < 120) {
-			window.scrollTo(0, window.pageYOffset - 120);
-		}
-	};
 
 	addStyle(`
 		.p-comments .p-comment-post:not(.mod-collection).comment-deleted .p-comment-wrapper, .p-comments .p-comment-post:not(.mod-collection).comment-mute-banned .p-comment-wrapper, .p-comments .p-comment-post:not(.mod-collection).comment-deleted-with-note .p-comment-wrapper {
