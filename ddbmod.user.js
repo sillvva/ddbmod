@@ -398,11 +398,12 @@ const runScript = function () {
 			}, 600);
 
 			document.querySelector("body").addEventListener("keyup", (e) => {
-				if (e.altKey && e.code == "KeyM") {
+				const hyper = e.ctrlKey && e.altKey && e.shiftKey && e.metaKey;
+				if (hyper && e.code == "KeyM") {
 					const link = unread[0].querySelector(".user-action-moderate");
 					link.click();
 				}
-				if (e.altKey && e.code == "KeyN") {
+				if (hyper && e.code == "KeyN") {
 					const post = unread[0].querySelector(".forum-post");
 					// jump(post.id);
 					post.querySelector(".add-note a").click();
