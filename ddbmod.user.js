@@ -301,7 +301,7 @@ const runScript = function () {
 		const linkContainer = document.querySelector(".report-details header.h2 h2");
 
 		if (link) {
-			const explodedLink = link.getAttribute("href").split("/");
+			const explodedLink = new URL(link.getAttribute("href"), "http://www.dndbeyond.com").pathname.split("/");
 			const entityTypeId = {
 				backgrounds: 1669830167,
 				classes: 789467139,
