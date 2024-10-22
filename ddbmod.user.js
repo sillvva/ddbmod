@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         D&D Beyond Moderator
 // @namespace    http://dndbeyond.com/
-// @version      3.0.5
+// @version      3.0.6
 // @description  Adds extra moderator options and links
 // @downloadURL  https://github.com/sillvva/ddbmod/blob/main/ddbmod.user.js
 // @updateURL  	 https://github.com/sillvva/ddbmod/raw/main/ddbmod.user.js
@@ -265,13 +265,7 @@ const runScript = function () {
 		const cb = document.querySelector("input#field-add-nickname-credit:not([disabled])");
 		if (cb) cb.setAttribute("checked", "checked");
 
-		const inp = document.querySelector("input#field-nickname");
-		if (inp && inp instanceof HTMLInputElement) {
-			setTimeout(() => {
-				inp.select();
-				inp.focus();
-			}, 250);
-		}
+		focusInput("input#field-nickname");
 
 		const banType = document.querySelector("select#field-ban-type");
 		banType.onchange = function () {
@@ -297,11 +291,12 @@ const runScript = function () {
 			}
 		});
 
-		const link = document.querySelector('.report-details header.h2 h2 a[target="_blank"]:last-child');
+		const link = document.querySelector('.report-details header.h2 h2 a[target="_blank"]');
 		const linkContainer = document.querySelector(".report-details header.h2 h2");
 
 		if (link) {
-			const explodedLink = new URL(link.getAttribute("href"), "http://www.dndbeyond.com").pathname.split("/");
+			const hbLink = new URL(link.getAttribute("href"), "http://www.dndbeyond.com");
+			const explodedLink = hbLink.pathname.split("/");
 			const entityTypeId = {
 				backgrounds: 1669830167,
 				classes: 789467139,
@@ -314,6 +309,8 @@ const runScript = function () {
 				subclasses: 789467139,
 				subraces: 1228963568,
 			}[explodedLink[1]];
+			const params = hbLink.searchParams;
+			const pComment = params.get("comment");
 
 			if (entityTypeId) {
 				const id = explodedLink[2].split("-")[0];
@@ -330,7 +327,7 @@ const runScript = function () {
 			}
 
 			var comment = document.querySelector("#reported-content .j-comment[data-id]:not(.user-profile)");
-			if (comment && !entityTypeId) {
+			if (comment && (pComment || !entityTypeId)) {
 				const commentId = comment.dataset.id;
 				const deleteLink = `https://www.dndbeyond.com/comments/${commentId}/delete`;
 
@@ -397,7 +394,7 @@ const runScript = function () {
 				jump(id);
 			}, 600);
 
-			document.querySelector("body").addEventListener("keyup", (e) => {
+			document.querySelector("body").addEventListener("keydown", (e) => {
 				const hyper = e.ctrlKey && e.altKey && e.shiftKey && e.metaKey;
 				if (hyper && e.code == "KeyM") {
 					const link = unread[0].querySelector(".user-action-moderate");
@@ -407,18 +404,16 @@ const runScript = function () {
 					const post = unread[0].querySelector(".forum-post");
 					// jump(post.id);
 					post.querySelector(".add-note a").click();
-					setTimeout(() => {
-						const input = document.querySelector(".ui-widget .ui-dialog-content .form-field-text-field [type=text]");
-						input.focus();
-					}, 400);
+					focusInput(".ui-widget .ui-dialog-content .form-field-text-field [type=text]");
 				}
 			});
 		} else {
 			const pageList = document.querySelector(".listing-container .b-pagination-list");
 			const pages = pageList.querySelectorAll("li:not(.b-pagination-item-next, .b-pagination-item-prev, .dots)");
-			const currentPage = [...pages].findIndex((page) => page.querySelector(".active")) + 1;
+			const currentPage = [...pages].findIndex((page) => page.querySelector(".active"));
+			const activePage = pages.item(currentPage);
 			const lastPage = pages.item(pages.length - 1);
-			const nextToLastPage = pages.item(pages.length - Math.min(2, pages.length - currentPage));
+			const nextToLastPage = pages.item(pages.length - Math.min(2, pages.length - currentPage - 1));
 			const nextExists = !!document.querySelector(".b-pagination-item-next");
 			if (nextExists) {
 				if (confirm("No unread found. Jump to last page?")) {
@@ -426,6 +421,9 @@ const runScript = function () {
 					const ntlpNum = parseInt(nextToLastPage.innerText);
 					let nextPage = ntlpNum;
 					if (lpNum - ntlpNum > 1) nextPage = lpNum - 1;
+					location.href = location.href.replace(location.search, "?page=" + nextPage);
+				} else if (confirm("Jump to next page?")) {
+					const nextPage = parseInt(activePage.innerText) + 1;
 					location.href = location.href.replace(location.search, "?page=" + nextPage);
 				}
 			} else {
@@ -554,6 +552,17 @@ const insertAfter = function (referenceNode, newNode) {
 
 const jump = function (h) {
 	location.href = "#" + h;
+};
+
+const focusInput = function (selector) {
+	window.ktimer = setInterval(() => {
+		const input = document.querySelector(selector);
+		input.focus();
+		input.select();
+		if (input === document.activeElement) {
+			clearInterval(window.ktimer);
+		}
+	}, 100);
 };
 
 function addRejectButton(nodeName) {
