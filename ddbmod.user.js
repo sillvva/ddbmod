@@ -129,6 +129,17 @@ const runScript = function () {
 		};
 		rejectForm.appendChild(notXBtn);
 
+    let inappBtn = document.createElement("button");
+    inappBtn.innerText = "Inappropriate";
+    inappBtn.classList.add("button");
+    inappBtn.onclick = function () {
+      reason.value = 2;
+      notes.value = `Content must be appropriate for young audiences. You are welcome to use these privately, but they will not be allowed as published homebrew.`;
+      return !!autoSave;
+    };
+    rejectForm.appendChild(inappBtn);
+
+
 		let mistakeBtn = document.createElement("button");
 		mistakeBtn.innerText = "Not Complete";
 		mistakeBtn.classList.add("button");
@@ -326,7 +337,7 @@ const runScript = function () {
 				linkContainer.prepend(rejectButton);
 			}
 
-			var comment = document.querySelector("#reported-content .j-comment[data-id]:not(.user-profile)");
+      var comment = document.querySelector("#reported-content .j-comment[data-id]:not(.user-profile)");
 			if (comment && (pComment || !entityTypeId)) {
 				const commentId = comment.dataset.id;
 				const deleteLink = `https://www.dndbeyond.com/comments/${commentId}/delete`;
@@ -381,11 +392,11 @@ const runScript = function () {
 	// Name Change Request
 	if (inPages("/forums/d-d-beyond-general/bugs-support/65846-display-name-change-request-thread-v2")) {
 		const posts = Array.from(document.querySelectorAll("li.p-comments"));
-		const unread = posts.filter(
+    window.unread = posts.filter(
 			(post) =>
 				!post.querySelectorAll(".comment-deleted").length &&
 				!post.querySelectorAll(".comment-deleted-with-note").length &&
-				!post.querySelectorAll(".public-message").length,
+        !post.querySelectorAll(".public-message").length
 		);
 
 		if (unread[0]) {
@@ -395,6 +406,12 @@ const runScript = function () {
 			}, 600);
 
 			document.querySelector("body").addEventListener("keydown", (e) => {
+        unread = posts.filter(
+          (post) =>
+            !post.querySelectorAll(".comment-deleted").length &&
+            !post.querySelectorAll(".comment-deleted-with-note").length &&
+            !post.querySelectorAll(".public-message").length
+        );
 				const hyper = e.ctrlKey && e.altKey && e.shiftKey && e.metaKey;
 				if (hyper && e.code == "KeyM") {
 					const link = unread[0].querySelector(".user-action-moderate");
@@ -416,14 +433,14 @@ const runScript = function () {
 			const nextToLastPage = pages.item(pages.length - Math.min(2, pages.length - currentPage - 1));
 			const nextExists = !!document.querySelector(".b-pagination-item-next");
 			if (nextExists) {
-				if (confirm("No unread found. Jump to last page?")) {
+        if (confirm("Jump to next page?")) {
+          const nextPage = parseInt(activePage.innerText) + 1;
+          location.href = location.href.replace(location.search, "?page=" + nextPage);
+        } else if (confirm("No unread found. Jump to last page?")) {
 					const lpNum = parseInt(lastPage.innerText);
 					const ntlpNum = parseInt(nextToLastPage.innerText);
 					let nextPage = ntlpNum;
 					if (lpNum - ntlpNum > 1) nextPage = lpNum - 1;
-					location.href = location.href.replace(location.search, "?page=" + nextPage);
-				} else if (confirm("Jump to next page?")) {
-					const nextPage = parseInt(activePage.innerText) + 1;
 					location.href = location.href.replace(location.search, "?page=" + nextPage);
 				}
 			} else {
