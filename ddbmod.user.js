@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         D&D Beyond Moderator
 // @namespace    http://dndbeyond.com/
-// @version      3.0.8
+// @version      3.0.9
 // @description  Adds extra moderator options and links
 // @downloadURL  https://github.com/sillvva/ddbmod/blob/main/ddbmod.user.js
 // @updateURL  	 https://github.com/sillvva/ddbmod/raw/main/ddbmod.user.js
@@ -411,7 +411,7 @@ const runScript = function () {
 						!post.querySelectorAll(".comment-deleted-with-note").length &&
 						!post.querySelectorAll(".public-message").length,
 				);
-				const hyper = e.ctrlKey && e.altKey && e.shiftKey && e.metaKey;
+				const hyper = e.ctrlKey && e.altKey;
 				if (hyper && e.code == "KeyM") {
 					const link = unread[0].querySelector(".user-action-moderate");
 					link.click();
