@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         D&D Beyond Moderator
 // @namespace    http://dndbeyond.com/
-// @version      3.0.6
+// @version      3.0.7
 // @description  Adds extra moderator options and links
 // @downloadURL  https://github.com/sillvva/ddbmod/blob/main/ddbmod.user.js
 // @updateURL  	 https://github.com/sillvva/ddbmod/raw/main/ddbmod.user.js
@@ -516,6 +516,20 @@ const runScript = function () {
 		.report-listing .comment-deleted {
 			background: #000c !important;
 			color: white;
+		}
+		.warning-text {
+			background: #0001;
+			padding: 0.5rem !important;
+		}
+		.warning-text blockquote.source-quote {
+			background: #0001;
+			padding: 0.5rem !important;
+		}
+		.flash-messages {
+			top: 0 !important;
+		}
+		.flash-messages .message {
+			padding: 0.5em 5em !important;
 		}
   `);
 };
