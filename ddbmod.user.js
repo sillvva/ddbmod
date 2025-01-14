@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         D&D Beyond Moderator
 // @namespace    http://dndbeyond.com/
-// @version      3.0.9
+// @version      3.0.10
 // @description  Adds extra moderator options and links
 // @downloadURL  https://github.com/sillvva/ddbmod/blob/main/ddbmod.user.js
 // @updateURL  	 https://github.com/sillvva/ddbmod/raw/main/ddbmod.user.js
