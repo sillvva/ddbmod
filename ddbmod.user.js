@@ -356,27 +356,6 @@ const runScript = function () {
 		}
 	}
 
-	// Bulk Moderation Box Styles
-	if (inPages("/forums", "/posts", "/monsters", "/races")) {
-		const cbm = document.querySelector(".comment-bulk-moderation");
-		if (cbm) cbm.style.position = "sticky";
-		if (cbm) cbm.style.width = "250px";
-		if (cbm) cbm.style.marginLeft = "auto";
-		if (cbm) cbm.style.right = "0";
-		if (cbm) cbm.style.bottom = "0";
-		if (cbm) cbm.style.borderWidth = "0";
-
-		const jas = document.querySelector(".comment-bulk-moderation .j-apply-selection");
-		if (jas) jas.style.color = "#ffffff";
-
-		const cbms = document.querySelector(".comment-bulk-moderation select");
-		if (cbms) cbms.style.margin = "0";
-		if (cbms) cbms.style.width = "100%";
-
-		const cbmf = document.querySelector(".comment-bulk-moderation form");
-		if (cbmf) cbmf.style.margin = "0";
-	}
-
 	// New Content
 	if (inPages("/new-content")) {
 		addStyle(".select2-container {" + "    display: block;" + "    width: 600px !important;" + "}");
@@ -529,6 +508,24 @@ const runScript = function () {
 		}
 		.flash-messages .message {
 			padding: 0.5em 5em !important;
+		}
+		.comment-bulk-moderation {
+			position: sticky !important;
+			width: 250px !important;
+			margin-left: auto !important;
+			right: 0 !important;
+			bottom: 0 !important;
+			border-width: 0 !important;
+		}
+		.comment-bulk-moderation .j-apply-selection {
+			color: white !important;
+		}
+		.comment-bulk-moderation select {
+			margin: 0 !important;
+			width: 100% !important;
+		}
+		.comment-bulk-moderation form {
+			margin: 0 !important;
 		}
   `);
 };
