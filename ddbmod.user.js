@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         D&D Beyond Moderator
 // @namespace    http://dndbeyond.com/
-// @version      3.0.10
+// @version      3.0.11
 // @description  Adds extra moderator options and links
 // @downloadURL  https://github.com/sillvva/ddbmod/blob/main/ddbmod.user.js
 // @updateURL  	 https://github.com/sillvva/ddbmod/raw/main/ddbmod.user.js
@@ -462,11 +462,6 @@ const runScript = function () {
 			insertAfter(usernameLink, container);
 		});
 	}
-
-	// All Pages
-	document.querySelectorAll(".magic-item-tooltip").forEach((mi) => {
-		mi.after(" (magic item)");
-	});
 
 	addStyle(`
 		.p-comments .p-comment-post:not(.mod-collection).comment-deleted .p-comment-wrapper, .p-comments .p-comment-post:not(.mod-collection).comment-mute-banned .p-comment-wrapper, .p-comments .p-comment-post:not(.mod-collection).comment-deleted-with-note .p-comment-wrapper {
